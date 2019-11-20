@@ -1,0 +1,161 @@
+﻿<Window x:Class="MailClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Mail Client" Height="800" Width="900">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="300"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Name="NetworkTraceScroll" Grid.Row="0" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" Background="#FFF0F0F0">
+            <TextBox Name="NetworkTrace" Background="#FFF0F0F0" Margin="5,0,0,0" BorderThickness="0" IsReadOnly="True"></TextBox>
+        </ScrollViewer>
+        
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Label Content="Server" Grid.Column="0"/>
+                <TextBox Name="ServerAddress" Grid.Column="1" VerticalContentAlignment="Center"/>
+            </Grid>
+            
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Port" Grid.Column="0"/>
+                <TextBox Name="ServerPort" Grid.Column="1" VerticalContentAlignment="Center"/>
+            </Grid>
+        </Grid>
+        
+        <TabControl Grid.Row="2">
+            <TabItem Header="Mail String">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label Content="Start" Grid.Row="0" Grid.Column="0"/>
+                    <ComboBox Name="Start_1" Grid.Row="0" Grid.Column="1" Width="70" HorizontalAlignment="Left" SelectedIndex="0">
+                        <ComboBoxItem>EHLO</ComboBoxItem>
+                        <ComboBoxItem>HELO</ComboBoxItem>
+                    </ComboBox>
+                    
+                    <Label Content="From" Grid.Row="1" Grid.Column="0"/>
+                    <TextBox Name="FromAddress_1" Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center"/>
+                    <TextBox Name="FromOption_1" Grid.Row="1" Grid.Column="2" VerticalContentAlignment="Center" ToolTip="Optional parameter to send as part of the MAIL FROM command"/>
+                    
+                    <Label Content="To" Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Name="ToAddress_1" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center"/>
+                    <TextBox Name="ToOption_1" Grid.Row="2" Grid.Column="2" VerticalContentAlignment="Center" ToolTip="Optional parameter to send as part of the RCPT TO command"/>
+                    
+                    <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Data" Grid.Row="0" Grid.Column="0"/>
+                        <TextBox Name="MailData" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Height="150" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible"/>
+                        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="2">
+                            <TextBox Name="DataOption_1" VerticalContentAlignment="Center" ToolTip="Optional parameter to send as part of the DATA command"/>
+                            <CheckBox Name="DotPad_1">Dot pad data</CheckBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <Button Content="Send" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="10" Width="100" Click="OnMailStringSubmit_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Mail File">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Start" Grid.Row="0" Grid.Column="0"/>
+                    <ComboBox Name="Start_2" Grid.Row="0" Grid.Column="1" Width="70" HorizontalAlignment="Left" SelectedIndex="0">
+                        <ComboBoxItem>EHLO</ComboBoxItem>
+                        <ComboBoxItem>HELO</ComboBoxItem>
+                    </ComboBox>
+
+                    <Label Content="From" Grid.Row="1" Grid.Column="0"/>
+                    <TextBox Name="FromAddress_2" Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center"/>
+                    <TextBox Name="FromOption_2" Grid.Row="1" Grid.Column="2" VerticalContentAlignment="Center" ToolTip="Optional parameter to send as part of the MAIL FROM command"/>
+
+                    <Label Content="To" Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Name="ToAddress_2" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center"/>
+                    <TextBox Name="ToOption_2" Grid.Row="2" Grid.Column="2" VerticalContentAlignment="Center" ToolTip="Optional parameter to send as part of the RCPT TO command"/>
+
+                    <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Data" Grid.Column="0"/>
+                        <Button Content="Browse" Grid.Column="1" Click="OnBrowse_Click"/>
+                        <TextBox Name="MailDataFile" Grid.Column="2" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                        <StackPanel Orientation="Vertical" Grid.Column="3" >
+                            <TextBox Name="DataOption_2" VerticalContentAlignment="Center" ToolTip="Optional parameter to send as part of the DATA command"/>
+                            <CheckBox Name="DotPad_2">Dot pad data</CheckBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <Button Content="Send" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="10" Width="100" Click="OnMailFileSubmit_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Mail Raw">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Content" Grid.Row="0" Grid.Column="0"/>
+                    <TextBox Name="ContentData" Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center"/>
+
+                    <Button Content="Send" Grid.Row="3" Grid.Column="1" Margin="10" Width="100" Click="OnMailRawSubmit_Click"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
